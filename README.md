@@ -1,187 +1,145 @@
-# Pubblicazione di un sito web
+# STEGANOGRAFIA
 
-## Indice dei passaggi
+## INTRODUZIONE
 
-- [Avere il sito da pubblicare](#Avere-il-sito-da-pubblicare)
-- [Comprare un server](#Comprare-un-server)
-- [Comprare un dominio](#Il-dominio)
-- [Configurazione](#Configurazione)
-  - Dominio
-    - [Cloudflare (spigazione e account)](#Cloudflare-(opzionale))
-    - [Puntare a cloudflare](#Configurazione-dominio-e-cloudflare)
-    - [Configurazione DNS su cloudflare (punta al server)](#Configurazione-dominio-e-cloudflare)
-  - Server
-    - [Installazione del web server (spiegazione)](#Configurazione-VPS)
-    - [Configurazione del web server](#Configurazione-VPS)
-- [Caricamento del sito](#Messa-in-produzione)
-- [Crash test](#Crash-test)
+***Che cos’è?***
 
-- [Fonti](#Fonti)
+La steganografia è una tecnica che si prefigge di nascondere la comunicazione tra due interlocutori. Il termine è composto appunto dalle parole greche στεγανός (coperto) e γραφία (scrittura). 
 
-## Avere il sito da pubblicare
-
-Prima di pubblicare un sito web dobbiamo necessariamente averne uno, in caso contrario lo si dovrà scrivere. Questo può avvenire attraverso linguaggi come: [HTML](https://en.wikipedia.org/wiki/HTML) & [CSS](https://en.wikipedia.org/wiki/Cascading_Style_Sheets) per la parte grafica, [Javascript](https://en.wikipedia.org/wiki/JavaScript) e [PHP](https://en.wikipedia.org/wiki/PHP) per il backend, mentre, per sviluppare il nostro Database potremmo sfruttare il [MySQLi](https://en.wikipedia.org/wiki/MySQLi).
-
-## Comprare un server
-
-Dopo aver scritto il codice, che costituisce la nostra pagina, possiamo iniziare a capire come pubblicarlo. La prima cosa da fare è acquistare una macchina server. Capiamo però cos'è questa macchina.
-
-Il server è un programma o, un dispositivo, che fornisce un servizio a un altro computer, detto client. Queste macchine e/o programmi attendono e soddisfano richieste. Vengono classificate in base al tipo di servizio che offrono, molti di questi li usiamo quotidianamente anche senza rendercene conto, di altri ne abbiamo più consapevolezza. 
-Di seguito sono elecanti quelli più comuni:
-- Mail Server:
-  * I *Mail server* sono server che, utilizzando le porte 25, 587, 465, 110, 143 e 993, permettono di inviare e smistare mail da un pc all'altro.
-- FTP Server:
-  * Il *File Transport Protocol* è un server che permette il trasferimento di file tra host e client, lavorando sulla porta 21.
-- Web Server:
-  * Il *Web Server* è un server in grado di gestire le richieste di trasferimento di pagine web, utilizza la porta 80 e 443.
-- DHCP Server:
-  * Il *DHCP Server* permette ai dispositivi di una rete locale di ricevere automaticamente la configurazione IP necessaria per stabilire una connessione e operare in rete, svolge questo servizio utilizzando la porta 67.
-- [DNS Server](#Il-dominio):
-  * Il *Domain Name System* è un server che fa da rubrica telefonica di internet, svolge questo servizio sulla porta 53.
-
-Ci sono molti sistemi nei quali possiamo caricare i nostri server, questi cambiano in base alle diverse necessità delle varie aziende. 
-
-- Per le piccole e medie imprese solitamente viene utilizzato un **server tower**, ovvero un computer assemblato in un case tower appunto, simile ai personal computer ma, con una grande capacità di storage e il supporto RAID. Altre caratteristiche fondamentali di questa tipologia sono: *la virtualizzazione*, *la gestione dei file e del sito web, delle applicazioni e dei dispositivi condivisi*. 
-Somigliando per forma ai personal computer si ha il vantaggio di un facile raffreddamento, possono però, sorgere alcune probblematiche, come la rumorosità, la voluminosità e la complessità nel camblaggio. In questi casi si può optare per delle varianti come il **server rack** e il *server blade**. 
-  - Per i **Server Rack** avremo un sistema standard d’installazione per i componenti, questa struttura ha dimensioni specifiche di 48,26cm in larghezza e di 4,445cm in altezza per ogni unità che ospita. I server poggiano su delle slitte in metallo e sono composti da due parti, quella posteriore dove si può agire sui vari collegamenti e, quella anteriore dove si possono maneggiare i comandi fisici, collegando eventualmente un monitor e una tastiera. Tuttavia la riduzione dello spazio occupato porta ad un aumento della densità delle componenti elettriche, la quale a sua volta necessita di un sistema di condizionamento che faccia rimanere la temperatura attorno ai 20 °C.
-  
-  *Questa soluzione può contenere circa 42 computer*.
-  - Mentre, per i **Server Blade** la situazione è leggermente diversa, questa tipologia è pensata per minimizzare al massimo lo spazio occupato. Ogni lama (blade) costituisce una macchina server distinta che, da sola o in concorso con altre, può simulare *N* macchine virtuali. Attualmente questa soluzione è quella con la densità elettronica e la potenza di calcolo maggiori tra quelle disponibili in commercio infatti, i suoi vantaggi e svantaggi sono gli stessi dei rack normali, estremizzati: massime prestazioni, minimo ingombro e cablaggio, necessità di un raffreddamento dedicato, consumi e rumorosità discreti.
-  
-  *Questa soluzione riesce a raggiungere densità sino a 128 macchine*.
-
-- I **data center** sono soluzioni pensate principalmente per grandi aziende che, in Italia, conosciamo come CED *Centro Elaborazione dati*. Tutti i dati e le informazioni che viaggiano in rete sono conservate in questi data center. All’interno di questi data center vengono collocati una serie di server che prendono il nome di Server Farm o Web-Server. All’interno di questi luoghi spesso viene costituito un sistema di cluster per gestire carichi di lavoro pesanti garantendo affidabilità e tolleranza ai guasti tramite una ridondanza fisica degli apparati.
-
-| Vantaggi di un data center interno | Svantaggi di un data center interno |
-| --- | --- |
-| Possibilità di agire fisicamente in tempi rapidi in caso di malfunzionamenti. | Necessità di aree da destinare a tale uso, con l’aumento dei costi di affitto degli uffici.|
-| Possibilità di avere un rapporto fisico tra l’area amministrativa e operativa di un'azienda e l’area sistemi e sviluppo. | Acquisto dell’hardware e delle risorse per gestire i dati. |
-| Controllo diretto sulla riservatezza dei dati a garanzia della privacy di dipendenti e clienti. | Costi per l’aggiornamento dei server e per la formazione. |
-| Controllo diretto sulla sicurezza dei dati in caso di instrusione e potenziali minacce software (virus). | Costi per la sicurezza anti intrusione, backup e coservazione dell’integrità dei dati. |
-
-- Le **Server Farm** sono aree fisiche, ubicate solitamente nel sottosuolo, che possono ospitare centinaia di macchine server. Queste aree devono avere caratteristiche specifiche:
-  - sicurezza fisica e sistemi di anti intrusione;
-  - alimentazione ridondata (duplicata), con gruppi di continuità;
-  - connettività a Internet stabile, garantita e affidabile;
-  - impianto di condizionamento per mantenere la temperatura bassa;
-  - sicurezza software tramite firewall e protezione logica delle macchine;
-
-  Questi sistemi generalmente offrono dei servizi detti di hosting, che consistono nell'installare la propria applicazione web in server di proprietà del provider e gestiti dal provider stesso. Ogni hosting può avere costi, prestazioni e opzioni differenti, in base al fornitore. 
-  
-
-  Un'altro servizio che offrono queste server farm è il **colocation in housing**, ovvero un azienda compra il server e pagherà alla server farm solo il prezzo di locazione (affitto, alimentazione, rete, ecc.). In caso di interventi sulla macchina è necessario concordare un appuntamento con il fornitore del servizio, il che potrebbe ritardare l'intervento.
-
-  | Vantaggi della colocation in housing | Svantaggi della colocation in housing |
-  | --- | --- |
-  | Proprietà dell'hardware e risparmio del canone del noleggio del server dedicato. | Impossibilità di intervenire con rapidità in caso di danno hardware, procedura a carico della server farm in caso di noleggio. |
-  | Configurazione totale: il sistema operativo e i software sono installati dell'azienda di housing prima di posizionare la macchina in server farm. | Costo iniziale di startup che comprende l'acquisto della macchina e la configurazione di base. |
-  | Possibilità di amministrare totalmente la macchina e di fare aggiornamenti software in qualsiasi momento. | Aggiornamento di sicurezza e dei sistemi a carico del cliente. |
+A differenza della crittografia, consente di nascondere il messaggio attraverso un vettore che viaggia senza destare alcun sospetto. 
 
 
-  I data center possono mettere a disposizione delle aziende clienti alcuni **server a uso esclusivo**. La differenza con il sistema in colocation housing sta nel fatto che in questo caso saremo noi a noleggiare l'hardware messo a disposizione dall'azienda. L'amministrazione software è completamente a carico del cliente, in questo modo nel caso di guasti sarà il provider del servizio a doversene occupare; questa tipologia di hosting si è diffusa tra le piccole aziende.
+***Il primo utilizzo***
 
-  | Vantaggi del noleggio di server dedicati | Svantaggi del noleggio di server dedicati |
-  | --- | --- |
-  | Delaga degli aggiornamenti di sicurezza allo staff del supporto sistemistico della server farm o dell'azienda che rivende il servizio. | Delega del funzionamento allo staff della server farm, operazione che richiede fiducia e competenza in caso di applicazioni critiche. |
-  | Nessun costo di acquisto iniziale della macchina e di installazione e configurazione iniziale. | Costo di affitto mensile dei server che può risultare alto in caso di applicazioni di rete critiche, in aggiunta al costo di connettività e di affitto dello spazio del rack (colocation). |
-  | Costo di affitto dei server noto a priori e distribuito in pagamenti mensili. | Impossibilità di ricevere sin da subito una macchina personalizzata, poiché il noleggio di server dedicati nella maggior parte delle server farm non consente personalizzazioni di default particolari, se non con costi aggiuntivi. |
+Il primo utilizzo registrato del termine fu nel 1499 da Johannes Trithemius nella sua Steganographia, un trattato sulla crittografia e la steganografia, mascherato come un libro sulla magia. L'opera incominciò a circolare e suscitò reazioni così allarmate che l'autore decise di non pubblicarla e ne distrusse molte copie ritenendo che non avrebbero mai dovuto vedere la luce.  
 
-  
-  I **server virtuali** o *VPS (Virtual Private Server)* permettono di avere una porzione di hardware condiviso con altri sistemi virtuali. Il provider del servizio mette a disposizione una macchina virtuale collocata su un server fisico che conterrà altre macchine virtuali. Il cliente gestirà la sua macchina virtuale mentre, il fornitore del servizio penserà alla macchina fisica. I software attualmente utilizzati permettono anche di dividere il carico di CPU e RAM allocati a ogni cliente, assicurando così a ognuno l'adeguata capacità di elaborazione.
-
-  | Vantaggi del server virtuale | Svantaggi del server virtuale |
-  | --- | --- |
-  | Costi bassi. | Mancanza di una macchina fisica a uso esclusivo come server. |
-  | Delega di cura tecnica e sicurezza del server fisico alla società che fornisce il servizio. | Possibilità di problemi legati allo scarso setup della virtualizzazione di uno degli utenti presenti sul server virtuali. |
-  | Separazione netta tra gli ambienti occupati da diverse aziende che affittano lo stesso server fisico. | La garanzia delle prestazioni dipende dalla capacità di dividere il carico di lavoro tra gli utenti senza personalizzazioni. |
-
-***Come comprare un server?***<br />
-Come abbiamo visto dobbiamo scegliere il server a noi più funzionale e conveniente, in questo caso nè abbiamo preso uno di tipo virtuale. 
-
-I principali rivenditori sono: [Aruba](https://www.cloud.it/vps/vps-hosting.aspx), [GameHosting](https://www.gamehosting.it/vps-winlinux), [OVH](https://www.ovhcloud.com/it/vps/) e [NFOServer](https://www.nfoservers.com/virtual-dedicated-private-server-rentals.php). Noi abbiamo utilizzato [Contabo](https://contabo.com/?show=vps) poiché ha un ottimo rapporto tra qualità e prezzo. In questo caso, non avendo bisogno di tanta potenza, abbiamo optato per il piano più economico, che comprende 4 GB di RAM, 2 CPU cores e 300 GB di spazio su disco.
+Continuò comunque a circolare in forma di minuta e fu pubblicata nel 1606. 
 
 
-## Il dominio
+***I primi riferimenti nella storia ***
 
-Il secondo punto, per caricare il nostro sito web nella rete appunto, è la compera di un dominio; ovvero di un indirizzo univoco attraverso il quale richiameremo il sito in internet. 
+Tuttavia, tracce della steganografia si trovano già nell’antica Grecia quando Erodoto nelle sue storie narrò di Demarato di Sparta, che per avvisare i compatrioti di una possibile invasione scrisse su una tavoletta di cera il messaggio di allarme, coprendola poi con un'altra tavoletta con un messaggio innocuo. 
 
-Un dominio è costituito da una serie di stringhe separate da punti, in cui è presente una gerarchia molto rigida.
-
-Nel dominio che tutti noi conosciamo, `www.google.com`, il dominio radice è `.com` detto anche il di primo livello, *top-level domain (TLD)*. Questi si distinguono in nazionali come `.it` (italia), `.fr` (francia) o quelli generici come `.net` (per i network), `.org` (dedicato alle organizzazioni), `.com` (per le organizzazioni commerciali) e molti altri, questo, prende il nome di *dominio radice*.
-
-Il dominio di secondo livello, riamendo nell'esempio sopracitato, è `google`; questo, può, in caso si presentino altri sottodomini, prendere il nome di *intermedio*. Questa sezione può essere liberamente scelta dall’utente.
-
-All’estrema sinistra troviamo `www.`, ovvero un dominio di terzo livello; non essendoci altri sottodomini, questo, prende il nome di *dominio foglia*.
+Erodoto narrò anche di Istieo che rasando la testa al suo servo, scrisse tramite un tatuaggio indelebile un messaggio sulla sua testa, poi ricoperto con la ricrescita dei capelli, con un’istruzione chiara ‘’quando arriverai a Mileto, dì ad Aristagora di rasarti i capelli’’. 
 
 
-I nomi di dominio sono formati dalle regole e dalle procedure del *Domain Name System (DNS)*.
-In generale, un nome di dominio rappresenta una risorsa IP, ad esempio un server che ospita un sito web o il sito web stesso.
+***La steganografia nella storia moderna ***
+
+Ci sono esempi anche nella storia moderna: 
+
+Durante entrambe le guerre mondiali le spie femminili utilizzavano il lavoro a maglia per inviare dei messaggi lasciando imperfezioni volontarie nel tessuto. 
+
+Durante la seconda guerra mondiale furono usati dei vetri fotosensibili, un progetto dichiarato top secret, usato per mandare messaggi agli alleati. 
+
+Jeremiah Denton ha ripetutamente battuto le palpebre in codice morse, scandendo la parola ‘’torture’’ nel 1966 in una conferenza stampa, con l’obiettivo di far capire agli americani che i prigionieri di guerra venivano torturati dai vietnamiti.  
 
 
+## IL FUNZIONAMENTO DELLA STEGANOGRAFIA 
 
-***Come comprare un dominio?***<br />
-Per ottenere uno bisogna rivolgersi a un *domain reseller*, ovvero, un rivenditore autorizzato di domini; si occuperà della registrazione e fornirà l’infrastruttura necessaria a renderlo funzionante. Molte aziende svolgono questo servizio, tra le più famose possiamo citare [GoDaddy](https://it.godaddy.com/domains/), [OVH](https://www.ovh.it/domini/), [NameCheap](https://www.namecheap.com/domains/), e molti altri. La registrazione è univoca e, solitamente, annua.
-
-
-## Configurazione
-
-  - ### Cloudflare (opzionale)
-
-    CloudFlare è un caching reverse proxy, ovvero un server che si pone tra host e client. Ottimizza i tempi di caricamento, minimizzando css e js, memorizzandoli, poi, nelle proprie cache così da ridurre l'attesa per il completo caricamento della paggina. In oltre, funge da firewall, nasconde il reale ip della nostra macchina e reindirizza il traffico in arrivo sui suoi server; così facendo offre protezione dagli attacchi Dos o DDos.
-
-  - ### Configurazione dominio e cloudflare
-
-    ***Come posso cominciare a usare cloudflare?***<br />
-    Prima di tutto dovremo creare un account e registrare il nome per il sito, precedentemente acquistato, cloudflare fornirà dei *Name Server (NS)*. Questi ultimi dovranno essere sostituiti a quelli di default del provider del nostro dominio. 
-
-    ***Come posso configurare i DNS?***<br />
-    Sostituiti i *Name Server*, per completare la configurazione del dominio si dovrà impostare un record `A` che punti all'*ip della macchina* o, nel nostro caso, alla *VPS*. 
+Con lo sviluppo della tecnologia digitale la steganografia ebbe un maggior utilizzo. La tecnica prevede che il “messaggio” che si deve trasferire vada inserito all’interno di un “contenitore” attraverso una “funzione” steganografica. A questo punto otterremo un “frammento stego”, il quale contiene l’informazione. Il ricevente, utilizzando poi la funzione di estrazione corretta, stabilita in precedenza con il mittente, otterrà il messaggio dal frammento stego. 
 
 
-  - ### Configurazione VPS
+***La chiave di sicurezza ***
 
-    ***Installazione pacchetti***<br />
-    Adesso che abbiamo configurato il dominio, bisognerà inizializzare la *VPS*. Recuperate le credenziali per accedervi tramite *SSH*, possiamo proseguire con l'installazione dei pacchetti necessari.
-
-    *Distribuzione utilizzata: ***Ubuntu Server 20.04***
-
-    - Aggiorniamo, scarichiamo e installiamo le ultime versione di pacchetti e dipendenze disponibili:
-      ```shell
-      sudo apt-get update && sudo apt-get -y upgrade
-      ```
-
-    - Scarichiamo e installiamo l'ultima versione disponibile di apache2 e di eventuali dipendenze*:
-      ```shell
-      sudo apt-get install -y apache2 
-      ```
-
-    **I pacchetti che dovremo installare possono variare in base al tipo di sito web e/o alle caratteristiche del nostro OS.*
-
-    ***Configurazione web server***<br />
-    Arrivati a questo punto si dovrà configurare il web server ma, in questo caso, le impostazioni di base erano concordi ai nostri bisogni. Se avessimo bisogno di effettuarvi delle modifiche, esiste un file apposito. Ogni sistema operativo ha la sua documentazione per trovarlo, su quello da noi scelto è: `/etc/apache2`.
+Per aumentare la sicurezza nella trasmissione di un messaggio venne introdotto l’utilizzo di una “chiave” di sicurezza, per l’autenticazione a 2 fattori. La suddetta chiave è di conoscenza sia da parte del mittente che del destinatario, in modo che chi riceve il contenitore con al suo interno l’informazione, oltre alla funzione di estrazione debba anche possedere la chiave d’accesso. 
 
 
-## Messa in produzione
+***Il Meccanismo di Funzionamento ***
 
-Come ultima cosa bisognerà necessariamente caricare i file, con il codice del nostro sito, sulla macchina. Per fare questo, basterà collegarsi al server tramite un clinet *FTP* ed effettuare l'upload nella cartella `/var/www/html`. Quesata è dove apache2, di base, andrà a prendere i file per creare un web server.
+Questo è il meccanismo di funzionamento: 
 
-
-## Crash test
-
-Per non saper ne leggere ne scrivere, io, proverei a vedere se funziona come dovrebbe. `:)`
+Assumendo che E sia il messaggio segreto da nascondere e C sia il contenitore nel quale si nasconderà il messaggio, avremo una chiave K, conosciuta dal mittente (A) e dal destinatario (B). fₖ (C, E) sarà la funzione steganografica che nasconde E in C utilizzando la chiave K, mentre C’ è il frammento stego contenente l’informazione, il quale è sato ottenuto attraverso la funzione f. Infine, sfruttando la chiave K e il frammento C’, si sarà in grado di estrarre E. Tutto ciò grazie alla funzione inversa di f: fₖ-1 (C') 
 
 
-## Fonti
+## LE VARIE TECNICHE DELLA STEGANOGRAFIA
 
-- Internetworking sistemi e reti (ISBN 978-88-7485-595-7)
-- https://www.cloudflare.com/
-- https://www.robertoiacono.it/cloudflare-cdn-come-quando-perche/
-- https://www.britannica.com/technology/domain-name
-- https://codepen.io/symro/pen/zXoBrK
-- https://codepen.io/tannersatch/pen/vLpQYV
-- https://mycolor.space/
-- https://github.com/ines/termynal
-- https://alvarotrigo.com/fullPage/
-- https://codepen.io/
-- https://www.miur.gov.it/nuovo-dominio-edu.it
-- https://www.iana.org/domains/root/servers
+Nel tempo il bisogno di camuffare messaggi è sempre stato presente, difatti, non solo nel periodo dell’antica Grecia avveniva ciò, ma anche nei secoli successivi, per esempio, nel 1550 era diffuso il metodo della griglia di Cardano, che era un metodo per la scrittura di messaggi segreti inventato dal matematico italiano Girolamo Cardano.  
+
+
+***Griglia Di cardano *** 
+
+Questo metodo si basava sull’utilizzo di un foglio di carta, in cui venivano opportunatamente ritagliate delle aperture, attraverso le quali si scriveva un messaggio su un foglio sottostante e a questo punto, rimossa la griglia, si completavano le porzioni del messaggio terminando lo scritto, inserendo del testo di senso compiuto, fino ad ottenere un messaggio all’apparenza normale. Questa griglia era costituita da un foglio di carta spessa, oppure una pergamena o un sottile foglio metallico, possibilmente a righe per facilitare il ritaglio delle caselle, che venivano posizionate in maniera arbitraria sul foglio, senza nessuna precisa regola.  
+
+
+***Cosa Fa Il Mittente?  ***
+
+Il mittente del messaggio collocava la griglia su un foglio di carta bianco e scriveva il suo messaggio attraverso le aperture, inserendo in ogni finestrella una lettera, una sillaba o parole intere secondo la dimensione delle aperture. Quando aveva terminato la scrittura del messaggio, toglieva la griglia e completava il messaggio, scrivendo del testo con o senza significato collegato ai frammenti del testo da nascondere. Un consiglio che dava Cardano, era quello di ripassare il testo tre volte, in modo da smussare ogni irregolarità che potesse rivelare la presenza delle parole nascoste.  
+
+
+***Cosa Fa Il Destinatario?  ***
+
+A questo punto il destinatario del messaggio doveva essere in possesso di una griglia identica a quella utilizzata dal mittente, e per leggere il messaggio non doveva far altro che disporla sul foglio ricevuto e leggere il testo che filtrava dalle aperture.  
+
+Oltre al metodo di Cardano c’era ed è ancora presente, il metodo acrostico, che è un metodo che utilizza una poesia o un testo qualunque e tramite una logica, si può ricavare il significato, per esempio, prendendo la prima lettera di ogni capoverso, si ottiene un messaggio di senso compiuto, oppure, prendendo un testo generico e tramite una combinazione pensata e scelta, per ogni parola si estraggono tutte le lettere che formeranno poi il messaggio nascosto. 
+
+Per il funzionamento di ciò è sufficiente che mittente/i e destinatario/i abbiano concordato la particolarità del messaggio.  
+
+
+***Esempio Metodo Acrostico Nel Poker***
+
+Un altro esempio di metodo acrostico è la famosa frase che si dice spesso nel Poker, “Come Quando Fuori Piove”, dove la “C” identifica il simbolo “Cuori”, la “Q” identifica il simbolo “Quadri”, la “F” “Fiori” e la “P” “Picche”.  
+
+
+***A Troppe Informazioni Diventa complicato  ***
+
+La tecnica degli acrostici è una tecnica di memoria limitata ad un certo numero di informazioni memorizzabili, infatti questa tecnica diventa impegnativa nel momento in cui aumenta il volume di informazioni da dover memorizzare. 
+
+
+***Camuffamento di Immagini ***
+
+Un altro mezzo molto usato per nascondere le informazioni è quello di inserirle all’interno di un’immagine (dipinto o fotografia) in modo da nascondere dati e informazioni senza dare nell’occhio. In passato venivano utilizzati i dipinti, ma al giorno d’oggi questo metodo viene utilizzato prevalentemente ritoccando le immagini. 
+
+Vengono inseriti nell’immagine alcuni dettagli che soltanto il destinatario sarà in grado di comprendere. 
+
+Durante la Seconda Guerra Mondiale, il direttore dell’FBI inventò la tecnica dei micropunti fotografici, la quale consiste nel ridurre alla dimensione di un piccolissimo punto un’immagine. Questa verrà poi inserita all’interno di un’altra immagine e quando il ricevente ingrandirà il punto otterrà l’immagine di buona qualità con al suo interno l’informazione. 
+
+Inoltre, esiste un metodo molto più complesso, che è quello di inserire delle sequenze di bit (messaggio) in un’immagine digitalizzata. A prima vista non si noterà alcuna differenza, in quanto l’immagine può al massimo risultare un po’ sporca rispetto all’originale. Per fare uso di queste tecniche esistono programmi abbastanza sofisticati. Ad esempio, prendendo come spunto una immagine rappresentante un paesaggio, sulla sinistra avremo un frammento di immagine nel quale i pixel sono messi in modo da descrivere il numero pi (pigreco). 
+
+
+## LE VARIE TECNICHE DELLA STEGANOGRAFIA NELL’INFORMATICA 
+
+La steganografia comprende l'occultamento di informazioni all'interno di file di computer.  
+
+Nella steganografia digitale, le comunicazioni elettroniche possono includere la codifica steganografica all'interno di un livello di trasporto, ad esempio un file di documento, un file di immagine, un programma o un protocollo. 
+
+I file multimediali sono ideali per la trasmissione steganografica a causa della loro grande dimensione. Ad esempio, un mittente potrebbe inviare un file di immagine innocuo e regolare il colore di un pixel ogni cento, per farlo corrispondere a un carattere alfabetico. La modifica è così sottile che qualcuno che non la cerca in modo specifico è improbabile che la noti. 
+
+Esistono innumerevoli tecniche stenografiche e sono divise in due principali categorie: 
+
+***La steganografia iniettiva***
+
+La steganografia iniettiva, la quale consiste nell’inserire un messaggio all’interno di un contenitore già esistente modificandolo in modo tale che risulti all’occhio umano praticamente indistinguibile dall’originale. 
+
+***La steganografia generativa ***
+
+L'altra categoria è la steganografia generativa consiste nel prendere il messaggio segreto e costruirgli un opportuno contenitore in modo tale da nascondere il messaggio nel miglior modo possibile. 
+
+
+Adesso che abbiamo analizzato le due principali categorie, passiamo alle tecniche più comunemente utilizzate, esse sono principalmente tre: 
+
+***La steganografia sostitutiva ***
+La stenografica sostitutiva è la tecnica più diffusa in quest’ambito. Alla base di questa tecnica è presente il concetto che qualsiasi tipo di segnale porta con sé un disturbo (o rumore), il quale può capitare che alteri il segnale stesso. 
+
+Alterando tale disturbo e sostituendolo con il nostro messaggio, possiamo avere un contenuto praticamente indistinguibile dall’originale ma allo stesso tempo contenete un messaggio nascosto. 
+
+***Facciamo un esempio ***
+
+Applicare questa tecnica nell’ambito informatico è abbastanza semplice, prendiamo come esempio una foto. Modificando i bit meno significativi (LSB) di questo file possiamo nascondere un messaggio. Dato che questo tipo di bit sono spesso soggetti ad errore è più difficile che tale messaggio venga riconosciuto. 
+
+In un'immagine i bit meno significativi sono la parte finale del codice del colore RGB di un pixel. Inserendo in ogni pixel una parte del messaggio è possibile modificare questa immagine in modo impercettibile all’occhio umano, poiché il valore dell’ultimo bit di un codice RGB è poco influente sul colore effettivo. 
+
+Volendo si può modificare il codice di un solo colore (per esempio il blu), in modo da avere un effetto ancora meno percepibile a discapito, però, della lunghezza del messaggio. 
+
+La stessa tecnica può essere applicata ai file audio andando a modificare il rumore di fondo e inserendoci il messaggio. 
+
+In entrambi i casi, qualsiasi tipo di alterazione portata al file (es. Compressione), andrà a cancellare l’informazione contenuta all’interno. 
+
+
+***Steganografia selettiva ***
+
+Un'altra tecnica è la steganografia selettiva, questa tecnica ha un uso meno diffuso rispetto alla precedente, data la più complessa e laboriosa esecuzione. Per esempio, si fissi una semplice funzione Hash che vale 1 se il contenitore contiene un numero dispari 1, e 0 se ne contiene un numero pari. Nel caso in cui si voglia trasmettere come informazione un bit dal valore 0 si cercherà un contenitore con numero pari di 1 e lo si invierà. Il vantaggio di questo metodo è che i contenitori non vengono alterati. 
+
+
+***Steganografia costruttiva ***
+
+L’ultima tecnica è quella della steganografia costruttiva, questa tecnica è molto simile alla precedente, l’unica differenza è l’approccio al problema. Mentre precedentemente si provava a creare un pacchetto su misura, con questa tecnica si prova a modificare un pacchetto già esistente in modo che rispetti alcuni criteri. Il difetto di questo metodo risiede nel fatto che non è facile costruire un modello del rumore. 
