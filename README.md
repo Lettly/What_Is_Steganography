@@ -61,12 +61,12 @@ Nel tempo il bisogno di camuffare messaggi è sempre stato presente, difatti, no
 Questo metodo si basava sull’utilizzo di un foglio di carta, in cui venivano opportunatamente ritagliate delle aperture, attraverso le quali si scriveva un messaggio su un foglio sottostante e a questo punto, rimossa la griglia, si completavano le porzioni del messaggio terminando lo scritto, inserendo del testo di senso compiuto, fino ad ottenere un messaggio all’apparenza normale. Questa griglia era costituita da un foglio di carta spessa, oppure una pergamena o un sottile foglio metallico, possibilmente a righe per facilitare il ritaglio delle caselle, che venivano posizionate in maniera arbitraria sul foglio, senza nessuna precisa regola.  
 
 
-***Cosa Fa Il Mittente? ***
+***Cosa Fa Il Mittente?***
 
 Il mittente del messaggio collocava la griglia su un foglio di carta bianco e scriveva il suo messaggio attraverso le aperture, inserendo in ogni finestrella una lettera, una sillaba o parole intere secondo la dimensione delle aperture. Quando aveva terminato la scrittura del messaggio, toglieva la griglia e completava il messaggio, scrivendo del testo con o senza significato collegato ai frammenti del testo da nascondere. Un consiglio che dava Cardano, era quello di ripassare il testo tre volte, in modo da smussare ogni irregolarità che potesse rivelare la presenza delle parole nascoste.  
 
 
-***Cosa Fa Il Destinatario? ***
+***Cosa Fa Il Destinatario?***
 
 A questo punto il destinatario del messaggio doveva essere in possesso di una griglia identica a quella utilizzata dal mittente, e per leggere il messaggio non doveva far altro che disporla sul foglio ricevuto e leggere il testo che filtrava dalle aperture.  
 
@@ -80,7 +80,7 @@ Per il funzionamento di ciò è sufficiente che mittente/i e destinatario/i abbi
 Un altro esempio di metodo acrostico è la famosa frase che si dice spesso nel Poker, “Come Quando Fuori Piove”, dove la “C” identifica il simbolo “Cuori”, la “Q” identifica il simbolo “Quadri”, la “F” “Fiori” e la “P” “Picche”.  
 
 
-***A Troppe Informazioni Diventa complicato ***
+***A Troppe Informazioni Diventa complicato***
 
 La tecnica degli acrostici è una tecnica di memoria limitata ad un certo numero di informazioni memorizzabili, infatti questa tecnica diventa impegnativa nel momento in cui aumenta il volume di informazioni da dover memorizzare. 
 
